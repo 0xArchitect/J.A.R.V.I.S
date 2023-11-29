@@ -88,7 +88,7 @@ export default function FlightList() {
     <div className="passengers h-screen w-screen overflow-hidden">
       <FlightListBackground playing={videosPlaying} status={state} />
       <div className="h-full w-full pt-[96px] pointer-events-none">
-        {state !== FlightState.NoDataFound && <div className="h-full w-full relative pointer-events-auto z-[10]">
+        {state === FlightState.NoDataFound || state === FlightState.FlightSpots ? null : <div className="h-full w-full relative pointer-events-auto z-[10]">
           <FlightListButtons
             onCheckFlightStatus={onCheckFlightStatus}
             onEnterConsole={onEnterConsole}

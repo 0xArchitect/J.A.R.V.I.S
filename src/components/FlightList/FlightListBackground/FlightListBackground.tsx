@@ -9,6 +9,7 @@ import gsap, { Power2, Power4 } from 'gsap';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sound from 'utils/sound';
+import axios from "axios";
 
 
 interface FlightListBackgroundProps {
@@ -22,7 +23,17 @@ export default function FlightListBackground({ playing, status }: FlightListBack
   const uiRightRef = useRef<HTMLVideoElement>(null);
   const uiVideosRef = useRef(null);
 
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([""]);
+  const [id, setID] = useState("");
+
   const [prompt, setPrompt] = useState("");
+  // const [userchats, setUserChats] = useState([""]);
+  // const [aichats, setAichats] = useState([""]);
+
+  type chattype = {
+    
+  }
 
   const navigate = useNavigate();
   const [mutedAudio, setMutedAudio] = useState(Sound.getMute());
@@ -30,6 +41,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
   const handlepromptChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setPrompt((e.target.value)); 
   };
+
 
   useEffect(() => {
     Sound.setMute(mutedAudio);
@@ -68,6 +80,31 @@ export default function FlightListBackground({ playing, status }: FlightListBack
     navigate('/');
   }
 
+  async function promptExec(prompt: string){
+    try{
+      const arr = data;
+      setLoading(true);
+
+      console.log(prompt, id);
+      if(id === ""){
+        console.log("no id")
+        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chatId: id ,chat: prompt}).then((res: any)=>{console.log(res); arr.push(res.data.result); setID(res.data.chatId); setLoading(false)}).catch((err)=>{setLoading(false)});
+      }
+
+      else{
+        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chat: prompt}).then((res: any)=>{console.log(res); arr.push(res.data.result); setLoading(false)}).catch((err)=>{setLoading(false)});;
+      }
+
+
+      setData(arr);
+      console.log("DONE");
+      
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
 
   return (
     <div className="cover h-screen w-screen bg-gradient-to-tr from-[rgb(32,35,102)] to-black overflow-hidden relative pt-[60px]">
@@ -80,25 +117,38 @@ export default function FlightListBackground({ playing, status }: FlightListBack
             <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className="h-full " />
 
 
-            <div className='relative z-[50] bg-cyan-500/10 border-2 p-5 border-cyan-400 w-full h-[90%] my-auto'>
+            <div className='relative z-[50] overflow-scroll bg-cyan-500/10 border-2 p-5 border-cyan-400 w-full h-[90%] my-auto pb-20'>
 
-             <div className='bg-cyan-600/40 p-5 w-[50%] block'>
+             <div className='bg-cyan-600/40 p-5 w-[50%] block mt-10'>
                   <h4 className=''>Hello, i am J.A.R.V.I.S, your personal AI assistant. Ask me anything!</h4>
               </div> 
+
+              {data.map((chat, i)=>(
+                <div className={`bg-cyan-600/40 ${i == 0 && "hidden"} ${chat === ""? "p-0": "p-5"} w-[70%] rounded-md my-5 flex ${i%2 == 0 ? "border-[2px] border-cyan-400 ": "float-right border-[1px] border-cyan-700"}`}>
+                <h4 className=''>{chat}</h4>
+            </div>
+                 
+              )) }
               
-              <div className='absolute w-[97.5%] bottom-3 mx-auto flex z-[50]'>
-              <input placeholder="Type something..." type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] text-cyan-400 text-lg bg-cyan-600/10 border-[1px] border-cyan-400 rounded-lg py-4 px-5 prompt ">
+              <div className='fixed w-[47%] bottom-12 mx-auto flex z-[50]'>
+              <input placeholder="Type something..." type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] text-cyan-400 text-lg bg-cyan-800/70 border-[1px] border-cyan-400 rounded-lg py-4 px-5 prompt ">
                 </input>
-                <div className='hover:from-cyan-300 hover:to-cyan-700/30 bg-gradient-to-tr from-cyan-400 to-cyan-800/30 py-4 px-5 mx-3 rounded-lg border-[1px] text-lg border-cyan-400'>
-                  <h4>Ask</h4>
-                </div>
+                <button onClick={()=>{
+                  const arr = data;
+                  promptExec(prompt);
+                  arr.push(prompt);
+                  setData(arr);
+                  setPrompt("");
+                }} className='hover:from-cyan-300 hover:to-cyan-700/30 bg-gradient-to-tr from-cyan-400 to-cyan-800/30 py-2 px-5 mx-3 rounded-lg border-[1px] border-cyan-400'>
+                  <h4 className='text-[1.5vw]'>Ask</h4>
+                </button>
               </div>
             </div>
 
 
-            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className="h-full " />
+            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className="h-full" />
           </div>
-          <div className="cover mix-blend-screen justify-center items-center h-full w-full absolute z-[-20]">
+          { status === FlightState.FlightSpots || status === FlightState.NoDataFound ? null :<div className="cover mix-blend-screen justify-center items-center h-full w-full absolute z-[0]">
             <div className="flex flex-1" />
             <video
               ref={videoRef}
@@ -111,7 +161,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
             />
             
             <div className="flex flex-1" />
-          </div>
+          </div>}
         </div>
       </div>
       <div className="absolute left-0 top-0 h-full mix-blend-screen" />
