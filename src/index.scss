@@ -281,6 +281,18 @@ body {
   top: 0;
   left: 0;
 }
+.noscr::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera /
+}
+
+.noscr {
+  overflow: scroll;
+  -ms-overflow-style: none;
+  / for Internet Explorer, Edge /
+  scrollbar-width: none;
+  / for Firefox */
+}
 
 #smooth-content {
   /* width: 100%; */

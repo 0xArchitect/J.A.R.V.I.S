@@ -18,6 +18,7 @@ module.exports = {
       fontFamily: {
         NeueMetanaNext: ['NeueMetanaNext', 'sans-serif'],
         NeueMetanaNextOutline: ['NeueMetanaNextOutline', 'poppins'],
+        Tiposka: []
       },
       colors: {
         // TODO: Expand the colors

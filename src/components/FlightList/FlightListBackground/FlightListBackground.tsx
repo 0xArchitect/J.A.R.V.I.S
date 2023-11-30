@@ -10,6 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sound from 'utils/sound';
 import axios from "axios";
+import send from "../../../assets/images/sendPrompt.png"
 
 
 interface FlightListBackgroundProps {
@@ -22,18 +23,17 @@ export default function FlightListBackground({ playing, status }: FlightListBack
   const uiLeftRef = useRef<HTMLVideoElement>(null);
   const uiRightRef = useRef<HTMLVideoElement>(null);
   const uiVideosRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([""]);
   const [id, setID] = useState("");
 
+  const[follow, setFollow] = useState([""]);
+
   const [prompt, setPrompt] = useState("");
   // const [userchats, setUserChats] = useState([""]);
   // const [aichats, setAichats] = useState([""]);
-
-  type chattype = {
-    
-  }
 
   const navigate = useNavigate();
   const [mutedAudio, setMutedAudio] = useState(Sound.getMute());
@@ -88,11 +88,11 @@ export default function FlightListBackground({ playing, status }: FlightListBack
       console.log(prompt, id);
       if(id === ""){
         console.log("no id")
-        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chatId: id ,chat: prompt}).then((res: any)=>{console.log(res); arr.push(res.data.result); setID(res.data.chatId); setLoading(false)}).catch((err)=>{setLoading(false)});
+        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chatId: id ,chat: prompt}).then((res: any)=>{console.log(res); arr.pop(); arr.push(res.data.result); setID(res.data.chatId); setLoading(false)}).catch((err)=>{setLoading(false)});
       }
 
       else{
-        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chat: prompt}).then((res: any)=>{console.log(res); arr.push(res.data.result); setLoading(false)}).catch((err)=>{setLoading(false)});;
+        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chat: prompt}).then((res: any)=>{console.log(res); arr.pop(); arr.push(res.data.result); setLoading(false)}).catch((err)=>{setLoading(false)});;
       }
 
 
@@ -105,6 +105,39 @@ export default function FlightListBackground({ playing, status }: FlightListBack
     }
   }
 
+  async function followUp(){
+    console.log("followup", id)
+    if(id){
+
+      try{
+        const arr = follow;
+        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat/followup", {chatId: id }).then((res: any)=>{
+          console.log(res.data.result); 
+          const result = res.data.result;
+          const followups = result.split("\n");
+  
+          console.log(followups);
+        })
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (data) {
+      contentRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }
+  }, [data, prompt]);
+
+  useEffect(()=>{
+    followUp();
+  }, [data])
+
 
   return (
     <div className="cover h-screen w-screen bg-gradient-to-tr from-[rgb(32,35,102)] to-black overflow-hidden relative pt-[60px]">
@@ -112,41 +145,64 @@ export default function FlightListBackground({ playing, status }: FlightListBack
         <div className="cover flex justify-center items-center overflow-hidden">
           <div
             ref={uiVideosRef}
-            className="mix-blend-screen min-w-[175vh] flex justify-between h-full w-full opacity-0"
+            className="mix-blend-screen min-w-[20vh] flex h-full w-full opacity-0"
           >
-            <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className="h-full " />
+            <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className="h-full max-[1000px]:hidden" />
 
+           
 
-            <div className='relative z-[50] overflow-scroll bg-cyan-500/10 border-2 p-5 border-cyan-400 w-full h-[90%] my-auto pb-20'>
+            {status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className='relative z-[50] overflow-scroll noscr p-5 w-[50%] max-[1000px]:w-full h-[80%] mt-10 pb-20'>
 
-             <div className='bg-cyan-600/40 p-5 w-[50%] block mt-10'>
-                  <h4 className=''>Hello, i am J.A.R.V.I.S, your personal AI assistant. Ask me anything!</h4>
+            <div className='mx-auto text-center'>
+                  <h4 className='prompt text-cyan-400 min-[801px]:text-[3vw] text-[7vw]'>[ j.a.r.v.i.s. ]</h4>
+                </div>
+
+             <div className=' w-[50%] block mt-10'>
+                  <h4 className='prompt text-yellow-400 bg-gradient-to-b min-[801px]:text-[1.3vw] text-[4vw] from-blue-400/10 to-blue-400/20 p-5'>Greetings, my friend. I am J.A.R.V.I.S. may I kindly ask your name?</h4>
               </div> 
 
+          <div className=''>
+
               {data.map((chat, i)=>(
-                <div className={`bg-cyan-600/40 ${i == 0 && "hidden"} ${chat === ""? "p-0": "p-5"} w-[70%] rounded-md my-5 flex ${i%2 == 0 ? "border-[2px] border-cyan-400 ": "float-right border-[1px] border-cyan-700"}`}>
-                <h4 className=''>{chat}</h4>
+                
+
+                <div className={`${i == 0 && "hidden"} ${chat === ""? "p-5": "p-5"} w-[70%] my-5 flex ${i%2 == 0 ? "bg-gradient-to-b from-blue-400/10 to-blue-400/20": "bg-cyan-400 float-right"}`}>
+                <h4 className={` ${i%2 == 0? "text-yellow-400 " : "text-black"} min-[801px]:text-[1.3vw] text-[4vw] prompt `}>{i == data.length-1 && loading ? "...": chat}</h4>
+   
+              
             </div>
                  
               )) }
+        
+             
               
-              <div className='fixed w-[47%] bottom-12 mx-auto flex z-[50]'>
-              <input placeholder="Type something..." type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] text-cyan-400 text-lg bg-cyan-800/70 border-[1px] border-cyan-400 rounded-lg py-4 px-5 prompt ">
-                </input>
-                <button onClick={()=>{
-                  const arr = data;
+              <form onSubmit={(e)=>{
+
+                e.preventDefault();
+
+                const arr = data;
+
+                if(prompt !== ""){
+
                   promptExec(prompt);
                   arr.push(prompt);
+                  arr.push("");
                   setData(arr);
                   setPrompt("");
-                }} className='hover:from-cyan-300 hover:to-cyan-700/30 bg-gradient-to-tr from-cyan-400 to-cyan-800/30 py-2 px-5 mx-3 rounded-lg border-[1px] border-cyan-400'>
-                  <h4 className='text-[1.5vw]'>Ask</h4>
+                }
+              }} className='fixed w-[47%] max-[1000px]:w-[95%] bottom-12 mx-auto flex z-[50] border-[1px] border-cyan-400'>
+              <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[801px]:text-[1.3vw] text-[4.5vw] text-cyan-400 text-lg bg-transparent  rounded-lg py-8 min-[801px]:py-4 px-5 prompt ">
+                </input>
+                <button type='submit' className='mx-3 rounded-full'>
+                  <img className='w-[80%] -rotate-90 shadow-xl hover:shadow-cyan-400/30 rounded-full' src={send}/>
                 </button>
-              </div>
-            </div>
+              </form>
+              <div ref={contentRef} />
+        </div>
+            </div>}
 
 
-            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className="h-full" />
+            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className="h-full max-[1000px]:hidden" />
           </div>
           { status === FlightState.FlightSpots || status === FlightState.NoDataFound ? null :<div className="cover mix-blend-screen justify-center items-center h-full w-full absolute z-[0]">
             <div className="flex flex-1" />
