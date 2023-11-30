@@ -88,11 +88,11 @@ export default function FlightListBackground({ playing, status }: FlightListBack
       console.log(prompt, id);
       if(id === ""){
         console.log("no id")
-        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chatId: id ,chat: prompt}).then((res: any)=>{console.log(res); arr.pop(); arr.push(res.data.result); setID(res.data.chatId); setLoading(false)}).catch((err)=>{setLoading(false)});
+        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chat: prompt}).then((res: any)=>{console.log(res); arr.pop(); arr.push(res.data.result); setID(res.data.chatId); setLoading(false)}).catch((err)=>{setLoading(false)});
       }
 
       else{
-        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chat: prompt}).then((res: any)=>{console.log(res); arr.pop(); arr.push(res.data.result); setLoading(false)}).catch((err)=>{setLoading(false)});;
+        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chatId: id ,chat: prompt}).then((res: any)=>{console.log(res); arr.pop(); arr.push(res.data.result); setLoading(false)}).catch((err)=>{setLoading(false)});;
       }
 
 
