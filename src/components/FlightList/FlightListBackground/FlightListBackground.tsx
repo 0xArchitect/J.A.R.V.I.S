@@ -116,7 +116,10 @@ export default function FlightListBackground({ playing, status }: FlightListBack
         await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat/followup", {chatId: id }).then((res: any)=>{
           // console.log(res.data.result); 
           const result = res.data.result;
-          const followups = result.split("\n");
+
+          // const followups = result.split("\n");
+
+          const followups = ["Tell me about this project", "What are the tokenomics", "What is the allocation"];
   
           setFollow(followups)
           console.log(followups);
@@ -154,7 +157,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
              <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className={`h-full max-[1000px]:hidden ${isConsole? "block": "hidden"} `} />
            
 
-            {status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className='relative z-[50] overflow-scroll noscr p-5 w-[50%] max-[1000px]:w-full h-[80%] mt-10 pb-20'>
+            {status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className='relative z-[50] p-5 w-[50%] max-[1000px]:w-full mt-10 pb-20'>
 
             <div className='mx-auto text-center'>
                   <h4 className='prompt text-primary-blue min-[801px]:text-[3vw] text-[7vw]'>[ j.a.r.v.i.s. ]</h4>
@@ -164,7 +167,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                   <h4 className='prompt text-yellow-400 bg-gradient-to-b min-[801px]:text-[1.3vw] text-[4vw] from-blue-400/10 to-blue-400/20 p-5'>Greetings, my friend. I am J.A.R.V.I.S. may I kindly ask your name?</h4>
               </div> 
 
-          <div className=''>
+          <div className='overflow-scroll noscr h-[55.5vh] pb-5'>
 
               {data.map((chat, i)=>(
                 
@@ -200,6 +203,8 @@ export default function FlightListBackground({ playing, status }: FlightListBack
         
              </div>
               
+              <div ref={contentRef} className='mt-5' />
+        </div>
               <form onSubmit={(e)=>{
 
                 e.preventDefault();
@@ -214,15 +219,13 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                   setData(arr);
                   setPrompt("");
                 }
-              }} className='fixed w-[47%] max-[1000px]:w-[95%] bottom-12 mx-auto flex z-[50] border-[1px] border-primary-blue'>
-              <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[801px]:text-[1.3vw] text-[4.6vw] text-primary-blue text-lg bg-transparent  rounded-lg py-8 min-[801px]:py-4 px-5 prompt ">
+              }} className='fixed  w-[47%] max-[1000px]:w-[94%] min-[801px]:bottom-12 mx-auto flex z-[50] border-[1px] border-primary-blue'>
+              <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[801px]:text-[1.3vw] text-[4.6vw] text-primary-blue text-lg bg-transparent py-8 min-[801px]:py-4 px-5 prompt ">
                 </input>
                 <button type='submit' className='mx-3 rounded-full'>
                   <img className='w-[80%] -rotate-90 shadow-xl hover:shadow-primary-blue/30 rounded-full' src={send}/>
                 </button>
               </form>
-              <div ref={contentRef} />
-        </div>
             </div>}
 
 
