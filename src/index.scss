@@ -431,3 +431,29 @@ body {
     -ms-interpolation-mode: nearest-neighbor;
   }
 }
+
+
+.chat-box {
+  position: fixed;
+  
+  width: 47%;
+  display: flex;
+  background-color: rgb(34 211 238 / 0.3);
+  border: 1px solid rgb(0 240 255);
+
+  z-index: 50;
+
+  @media (max-width:1000px) {
+    width: 94%;
+    background-color: hsla(188, 86%, 43%, 0.5)
+  }
+}
+
+.chat {
+  padding-bottom: 4.5rem;
+  
+  @media (max-width:1000px) {
+    padding-bottom: 1rem;
+    height: 67vh;
+  }
+}

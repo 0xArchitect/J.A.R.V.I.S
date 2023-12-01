@@ -164,7 +164,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                 </div>
 
 
-          <div className='overflow-scroll noscr h-[72vh] pb-5'>
+          <div className='overflow-scroll noscr h-[72vh] pb-5 chat'>
 
              <div className=' w-[50%] block mt-10'>
                   <h4 className='prompt text-yellow-400 bg-gradient-to-b min-[801px]:text-[1.3vw] text-[4vw] from-blue-400/10 to-blue-400/20 p-5'>Greetings, my friend. I am J.A.R.V.I.S. may I kindly ask your name?</h4>
@@ -220,7 +220,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                   setData(arr);
                   setPrompt("");
                 }
-              }} className='fixed  w-[47%] bg-cyan-400/30 max-[1000px]:w-[94%] min-[801px]:bottom-6 mx-auto flex z-[50] border-[1px] border-primary-blue'>
+              }} className='chat-box'>
               <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[801px]:text-[1.3vw] text-[4.6vw] bg-transparent text-primary-blue text-lg py-8 min-[801px]:py-4 px-5 prompt ">
                 </input>
                 <button type='submit' className='mx-3 rounded-full'>
