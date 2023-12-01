@@ -146,17 +146,15 @@ export default function FlightListBackground({ playing, status }: FlightListBack
         <div className="cover flex justify-center items-center overflow-hidden">
           <div
             ref={uiVideosRef}
-            className="mix-blend-screen min-w-[20vh] flex h-full w-full opacity-0"
+            className="mix-blend-screen min-w-[20vh] relative flex h-full w-full opacity-0"
           >
-             <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className="h-full max-[1000px]:hidden" style={{
-              display: isConsole ? 'block': 'none'
-             }} />
+             <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className={`h-full max-[1000px]:hidden ${isConsole? "block": "hidden"} `} />
            
 
             {status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className='relative z-[50] overflow-scroll noscr p-5 w-[50%] max-[1000px]:w-full h-[80%] mt-10 pb-20'>
 
             <div className='mx-auto text-center'>
-                  <h4 className='prompt text-cyan-400 min-[801px]:text-[3vw] text-[7vw]'>[ j.a.r.v.i.s. ]</h4>
+                  <h4 className='prompt text-primary-blue min-[801px]:text-[3vw] text-[7vw]'>[ j.a.r.v.i.s. ]</h4>
                 </div>
 
              <div className=' w-[50%] block mt-10'>
@@ -168,7 +166,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
               {data.map((chat, i)=>(
                 
 
-                <div className={`${i == 0 && "hidden"} ${chat === ""? "p-5": "p-5"} w-[70%] my-5 flex ${i%2 == 0 ? "bg-gradient-to-b from-blue-400/10 to-blue-400/20": "bg-cyan-400 float-right"}`}>
+                <div className={`${i == 0 && "hidden"} ${chat === ""? "p-5": "p-5"} w-[70%] my-5 flex ${i%2 == 0 ? "bg-gradient-to-b from-blue-400/10 to-blue-400/20": "bg-primary-blue float-right"}`}>
                 <h4 className={` ${i%2 == 0? "text-yellow-400 " : "text-black"} min-[801px]:text-[1.3vw] text-[4vw] prompt `}>{i == data.length-1 && loading ? "...": chat}</h4>
    
               
@@ -192,11 +190,11 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                   setData(arr);
                   setPrompt("");
                 }
-              }} className='fixed w-[47%] max-[1000px]:w-[95%] bottom-12 mx-auto flex z-[50] border-[1px] border-cyan-400'>
-              <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[801px]:text-[1.3vw] text-[4.5vw] text-cyan-400 text-lg bg-transparent  rounded-lg py-8 min-[801px]:py-4 px-5 prompt ">
+              }} className='fixed w-[47%] max-[1000px]:w-[95%] bottom-12 mx-auto flex z-[50] border-[1px] border-primary-blue'>
+              <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[801px]:text-[1.3vw] text-[4.5vw] text-primary-blue text-lg bg-transparent  rounded-lg py-8 min-[801px]:py-4 px-5 prompt ">
                 </input>
                 <button type='submit' className='mx-3 rounded-full'>
-                  <img className='w-[80%] -rotate-90 shadow-xl hover:shadow-cyan-400/30 rounded-full' src={send}/>
+                  <img className='w-[80%] -rotate-90 shadow-xl hover:shadow-primary-blue/30 rounded-full' src={send}/>
                 </button>
               </form>
               <div ref={contentRef} />
@@ -204,9 +202,10 @@ export default function FlightListBackground({ playing, status }: FlightListBack
             </div>}
 
 
-            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className="h-full max-[1000px]:hidden" style={{
-              display: isConsole ? 'block': 'none'
-             }} />
+
+
+            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className={`h-full absolute right-0 max-[1000px]:hidden float-right ${isConsole? "block": "hidden"}`}/>
+
           </div>
           { status === FlightState.FlightSpots || status === FlightState.NoDataFound ? null :<div className="cover mix-blend-screen justify-center items-center h-full w-full absolute z-[0]">
             <div className="flex flex-1" />

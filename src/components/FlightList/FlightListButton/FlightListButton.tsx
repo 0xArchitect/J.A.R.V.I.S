@@ -36,7 +36,7 @@ function FlightListButton(props: FlightListButtonProps) {
       <div className="right-0 absolute h-full rotate-180">
         <ButtonDecoration />
       </div>
-      <div className="caption text-primary-blue">{children}</div>
+      <div className="caption text-primary-blue ">{children}</div>
     </button>
   );
 }
