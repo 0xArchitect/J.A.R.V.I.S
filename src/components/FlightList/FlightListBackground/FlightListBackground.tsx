@@ -112,10 +112,11 @@ export default function FlightListBackground({ playing, status }: FlightListBack
       try{
         const arr = follow;
         await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat/followup", {chatId: id }).then((res: any)=>{
-          console.log(res.data.result); 
+          // console.log(res.data.result); 
           const result = res.data.result;
           const followups = result.split("\n");
   
+          setFollow(followups)
           console.log(followups);
         })
       }
@@ -132,11 +133,11 @@ export default function FlightListBackground({ playing, status }: FlightListBack
         block: "end",
       });
     }
-  }, [data, prompt]);
+  }, [data, follow, loading]);
 
   useEffect(()=>{
     followUp();
-  }, [data])
+  }, [data, id])
 
   const isConsole = status !== FlightState.Console;
 
@@ -173,8 +174,29 @@ export default function FlightListBackground({ playing, status }: FlightListBack
             </div>
                  
               )) }
+
+              <div className='grid grid-flow-cols gap-5 grid-cols-3 min-[1000px]:w-[80%] mx-auto'>
+
+              {!loading && follow.map((f)=>(
+                
+                  <div onClick={()=>{
+
+                    const arr = data;
+
+                    promptExec(f);
+                    arr.push(f);
+                    arr.push("");
+                    setData(arr);
+                    setPrompt("");
+
+
+                    }} className={`${f==""? "hidden": null} p-3 border-[1px] border-blue-300 bg-gradient-to-b from-blue-300/10 to-blue-300/30`}>
+                    <h4 className=' prompt text-[1.2vw] max-[800px]:text-[3vw]'>{f.substring(0,100)}...</h4>
+                    </div>
+              ))
+              }
         
-             
+             </div>
               
               <form onSubmit={(e)=>{
 
@@ -191,7 +213,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                   setPrompt("");
                 }
               }} className='fixed w-[47%] max-[1000px]:w-[95%] bottom-12 mx-auto flex z-[50] border-[1px] border-primary-blue'>
-              <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[801px]:text-[1.3vw] text-[4.5vw] text-primary-blue text-lg bg-transparent  rounded-lg py-8 min-[801px]:py-4 px-5 prompt ">
+              <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[801px]:text-[1.3vw] text-[4.6vw] text-primary-blue text-lg bg-transparent  rounded-lg py-8 min-[801px]:py-4 px-5 prompt ">
                 </input>
                 <button type='submit' className='mx-3 rounded-full'>
                   <img className='w-[80%] -rotate-90 shadow-xl hover:shadow-primary-blue/30 rounded-full' src={send}/>
