@@ -138,6 +138,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
     followUp();
   }, [data])
 
+  const isConsole = status !== FlightState.Console;
 
   return (
     <div className="cover h-screen w-screen bg-gradient-to-tr from-[rgb(32,35,102)] to-black overflow-hidden relative pt-[60px]">
@@ -147,8 +148,9 @@ export default function FlightListBackground({ playing, status }: FlightListBack
             ref={uiVideosRef}
             className="mix-blend-screen min-w-[20vh] flex h-full w-full opacity-0"
           >
-            <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className="h-full max-[1000px]:hidden" />
-
+             <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className="h-full max-[1000px]:hidden" style={{
+              display: isConsole ? 'block': 'none'
+             }} />
            
 
             {status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className='relative z-[50] overflow-scroll noscr p-5 w-[50%] max-[1000px]:w-full h-[80%] mt-10 pb-20'>
@@ -202,7 +204,9 @@ export default function FlightListBackground({ playing, status }: FlightListBack
             </div>}
 
 
-            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className="h-full max-[1000px]:hidden" />
+            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className="h-full max-[1000px]:hidden" style={{
+              display: isConsole ? 'block': 'none'
+             }} />
           </div>
           { status === FlightState.FlightSpots || status === FlightState.NoDataFound ? null :<div className="cover mix-blend-screen justify-center items-center h-full w-full absolute z-[0]">
             <div className="flex flex-1" />
@@ -226,9 +230,9 @@ export default function FlightListBackground({ playing, status }: FlightListBack
       <div className="fixed top-0 w-full h-[10%] bg-gradient-to-t from-[rgba(12,255,255,0)] to-[rgb(0,240,255)] opacity-20" />
       <div className="fixed bottom-0 w-full h-[10%] z-[-10] bg-gradient-to-b from-[rgba(12,255,255,0)] to-[rgb(0,240,255)] opacity-20" />
       <div className="fixed top-10 right-10 left-10 flex justify-between pointer-events-auto">
-        <Button onClick={goHome} small={false}>
+        {isConsole && <Button onClick={goHome} small={false}>
           home
-        </Button>
+        </Button>}
         <div className="flex-1  px-8 items-center hidden md:flex">
           <div className="w-full relative">
             <PageDecoration />
@@ -237,7 +241,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
         </div>
         
         <div className="flex flex-grow-0">
-          <PassengersSocialButtons muteButton muted={mutedAudio} onToggleMusic={toggleAudio} />
+         {isConsole && <PassengersSocialButtons muteButton muted={mutedAudio} onToggleMusic={toggleAudio} />}
         </div>
       </div>
     </div>

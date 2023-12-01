@@ -62,7 +62,7 @@ export default function FlightListButtons(props: FlightListButtonsProps) {
   return (
     <div className="h-full w-full relative">
       <div ref={enterConsoleButton} className="cover flex justify-center items-center">
-        <FlightListButton onClick={onEnterConsole}>ENTER CONSOLE</FlightListButton>
+        {/* <FlightListButton onClick={onEnterConsole}>ENTER CONSOLE</FlightListButton> */}
       </div>
       <div
         ref={checkFlightStatusButton}
