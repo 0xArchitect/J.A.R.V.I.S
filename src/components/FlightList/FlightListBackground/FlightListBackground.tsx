@@ -36,7 +36,9 @@ export default function FlightListBackground({ playing, status }: FlightListBack
   // const [aichats, setAichats] = useState([""]);
 
   const navigate = useNavigate();
-  const [mutedAudio, setMutedAudio] = useState(Sound.getMute());
+  // const [mutedAudio, setMutedAudio] = useState(Sound.getMute());
+  const [mutedAudio, setMutedAudio] = useState(true);
+
 
   const handlepromptChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setPrompt((e.target.value)); 
