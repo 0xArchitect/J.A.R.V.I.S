@@ -16,7 +16,7 @@ export default function FlightList() {
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const [userEntered, setUserEntered] = useState(false);
+  const [userEntered, setUserEntered] = useState(true);
 
   const noData = useMemo(() => {
     if (!flightData) return true;
