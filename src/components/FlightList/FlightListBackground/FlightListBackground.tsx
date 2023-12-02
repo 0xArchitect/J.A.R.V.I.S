@@ -169,7 +169,11 @@ export default function FlightListBackground({ playing, status }: FlightListBack
 
                   {data.map((chat, i) => (
                     <div className={`${i == 0 && "hidden"} ${chat === "" ? "p-5" : "p-5"} w-[70%] my-5 flex ${i % 2 == 0 ? "bg-gradient-to-b from-blue-400/10 to-blue-400/20" : "bg-primary-blue float-right"}`}>
-                      <h4 className={` ${i % 2 == 0 ? "text-yellow-400 " : "text-black"} min-[1001px]:text-[1.3vw] text-[1.5rem] prompt `}>{i == data.length - 1 && loading ? "..." : chat}</h4>
+                      <h4
+                        className={` ${i % 2 == 0 ? "text-yellow-400 " : "text-black"} min-[1001px]:text-[1.3vw] text-[1.5rem] prompt `}
+                      >
+                        {i == data.length - 1 && loading ? <span id='thinking'></span> : chat}
+                      </h4>
                     </div>
                   ))}
 
