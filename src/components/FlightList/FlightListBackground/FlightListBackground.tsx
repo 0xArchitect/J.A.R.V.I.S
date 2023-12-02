@@ -194,9 +194,9 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                     arr.push("");
                     setData(arr);
                     setPrompt("");
+                    // ${i !== 2 && i!==3 && i!==4 ? "hidden": null} 
 
-
-                    }} className={`${i !== 2 && i!==3 && i!==4 ? "hidden": null} ${f==""? "hidden": null} p-3 border-[1px] border-blue-300 bg-gradient-to-b from-blue-300/10 to-blue-300/30`}>
+                    }} className={`${f==""? "hidden": null} p-3 border-[1px] border-blue-300 bg-gradient-to-b from-blue-300/10 to-blue-300/30`}>
                     <h4 className=' prompt text-[1.2vw] max-[800px]:text-[3vw]'>{f.substring(0,100)}...</h4>
                     </div>
               ))
