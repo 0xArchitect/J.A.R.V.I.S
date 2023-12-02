@@ -4,6 +4,7 @@ import EMAIL_ICON from 'assets/icons/email.png';
 import { ReactComponent as EMAIL_PASSENGER_ICON } from 'assets/icons/email_passenger.svg';
 import TWITTER_ICON from 'assets/icons/twitter.png';
 import { ReactComponent as TWITTER_PASSENGER_ICON } from 'assets/icons/twitter_passenger.svg';
+import { ReactComponent as TELEGRAM_PASSENGER_ICON } from "assets/icons/twitter_passenger.svg";
 
 export const VIEW_PORT_INTERSECTION_TAG = 'view-port-intersection';
 export const VIRTUAL_SCROLL_EASING_DURATION = 0.5;
@@ -23,6 +24,7 @@ export const SOCIAL_MEDIA = {
   passenger: {
     discord: { link: 'https://discord.gg/passengers', icon: DISCORD_PASSENGER_ICON, alt: 'discord' },
     twitter: { link: 'https://twitter.com/Passengers_NFT', icon: TWITTER_PASSENGER_ICON, alt: 'twitter' },
+    telegram: {link: "nada", icon: TELEGRAM_PASSENGER_ICON, alt: 'twitter'},
     email: { link: 'mailto:info@passengers.space', icon: EMAIL_PASSENGER_ICON, alt: 'email' },
   },
 };
