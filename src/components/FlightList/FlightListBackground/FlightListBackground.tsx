@@ -117,9 +117,9 @@ export default function FlightListBackground({ playing, status }: FlightListBack
           // console.log(res.data.result); 
           const result = res.data.result;
 
-          const followups = result.split("\n");
+          // const followups = result.split("\n");
 
-          // const followups = ["Tell me about this project", "What are the tokenomics", "What is the allocation"];
+          const followups = ["Tell me about this project", "What are the tokenomics", "What is the allocation"];
   
           setFollow(followups)
           console.log(followups);
