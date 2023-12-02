@@ -268,7 +268,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
         </div>
         
         <div className="flex flex-grow-0">
-         {isConsole && <PassengersSocialButtons muteButton muted={mutedAudio} onToggleMusic={toggleAudio} />}
+         {isConsole && <PassengersSocialButtons  socialsEnabled={true}/>}
         </div>
       </div>
     </div>
