@@ -154,85 +154,88 @@ export default function FlightListBackground({ playing, status }: FlightListBack
             ref={uiVideosRef}
             className="mix-blend-screen min-w-[20vh] relative flex h-full w-full opacity-0"
           >
-             <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className={`h-full max-[1000px]:hidden ${isConsole? "block": "hidden"} `} />
+             <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className={`h-full max-[1100px]:hidden ${isConsole? "block": "hidden"} `} />
            
 
-            {status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className='relative z-[50] p-5 w-[49%] max-[1200px]:w-[33%] max-[1000px]:w-full mt-10 pb-20'>
+<div>
+{status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className=' z-[50] p-5 w-[60%] max-[1200px]:w-[55%] max-[1100px]:w-full mt-10 pb-20'>
 
-            <div className='mx-auto text-center'>
-                  <h4 className='prompt text-primary-blue min-[1001px]:text-[3vw] text-[7vw]'>[ j.a.r.v.i.s. ]</h4>
-                </div>
+<div className='mx-auto text-center'>
+      <h4 className='prompt text-primary-blue min-[1001px]:text-[3vw] text-[7vw]'>[ j.a.r.v.i.s. ]</h4>
+    </div>
 
 
-          <div className='overflow-scroll noscr h-[70vh] min-[801px]:h-[62vh] pb-5 chat'>
+<div className='overflow-scroll noscr h-[70vh] min-[801px]:h-[62vh] pb-5 chat'>
 
-             <div className=' w-[50%] block mt-10'>
-                  <h4 className='prompt text-yellow-400 bg-gradient-to-b min-[1001px]:text-[1.3vw] text-[4vw] from-blue-400/10 to-blue-400/20 p-5'>Greetings, my friend. I am J.A.R.V.I.S. may I kindly ask your name?</h4>
-              </div> 
+ <div className=' w-[50%] block mt-10'>
+      <h4 className='prompt text-yellow-400 bg-gradient-to-b min-[1001px]:text-[1.3vw] text-[4vw] from-blue-400/10 to-blue-400/20 p-5'>Greetings, my friend. I am J.A.R.V.I.S. may I kindly ask your name?</h4>
+  </div> 
 
-              {data.map((chat, i)=>(
-                
+  {data.map((chat, i)=>(
+    
 
-                <div className={`${i == 0 && "hidden"} ${chat === ""? "p-5": "p-5"} w-[70%] my-5 flex ${i%2 == 0 ? "bg-gradient-to-b from-blue-400/10 to-blue-400/20": "bg-primary-blue float-right"}`}>
-                <h4 className={` ${i%2 == 0? "text-yellow-400 " : "text-black"} min-[1001px]:text-[1.3vw] text-[4vw] prompt `}>{i == data.length-1 && loading ? "...": chat}</h4>
-   
-              
-            </div>
-                 
-              )) }
+    <div className={`${i == 0 && "hidden"} ${chat === ""? "p-5": "p-5"} w-[70%] my-5 flex ${i%2 == 0 ? "bg-gradient-to-b from-blue-400/10 to-blue-400/20": "bg-primary-blue float-right"}`}>
+    <h4 className={` ${i%2 == 0? "text-yellow-400 " : "text-black"} min-[1001px]:text-[1.3vw] text-[4vw] prompt `}>{i == data.length-1 && loading ? "...": chat}</h4>
 
-              <div className='grid grid-flow-cols gap-5 grid-cols-3 min-[1000px]:w-[80%] mx-auto'>
+  
+</div>
+     
+  )) }
 
-              {!loading && follow.map((f, i)=>(
-                
-                  <div onClick={()=>{
+  <div className='grid grid-flow-cols gap-5 grid-cols-3 min-[1100px]:w-[80%] mx-auto'>
 
-                    const arr = data;
+  {!loading && follow.map((f, i)=>(
+    
+      <div onClick={()=>{
 
-                    promptExec(f);
-                    arr.push(f);
-                    arr.push("");
-                    setData(arr);
-                    setPrompt("");
-                    // ${i !== 2 && i!==3 && i!==4 ? "hidden": null} 
+        const arr = data;
 
-                    }} className={`${f==""? "hidden": null} p-3 border-[1px] border-blue-300 bg-gradient-to-b from-blue-300/10 to-blue-300/30`}>
-                    <h4 className=' prompt text-[1.2vw] max-[1000px]:text-[3vw]'>{f.substring(0,100)}...</h4>
-                    </div>
-              ))
-              }
-        
-             </div>
-              
-              <div ref={contentRef} className='mt-5' />
+        promptExec(f);
+        arr.push(f);
+        arr.push("");
+        setData(arr);
+        setPrompt("");
+        // ${i !== 2 && i!==3 && i!==4 ? "hidden": null} 
+
+        }} className={`${f==""? "hidden": null} p-3 border-[1px] border-blue-300 bg-gradient-to-b from-blue-300/10 to-blue-300/30`}>
+        <h4 className=' prompt text-[1.2vw] max-[1100px]:text-[3vw]'>{f.substring(0,100)}...</h4>
         </div>
-              <form onSubmit={(e)=>{
+  ))
+  }
 
-                e.preventDefault();
+ </div>
+  
+  <div ref={contentRef} className='mt-5' />
+</div>
+  <form onSubmit={(e)=>{
 
-                const arr = data;
+    e.preventDefault();
 
-                if(prompt !== ""){
+    const arr = data;
 
-                  promptExec(prompt);
-                  arr.push(prompt);
-                  arr.push("");
-                  setData(arr);
-                  setPrompt("");
-                }
-              }} className='chat-box w-[55%]'>
-              <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[1001px]:text-[1.3vw] text-[4.6vw] bg-transparent text-primary-blue text-lg py-8 min-[1001px]:py-4 px-5 prompt ">
-                </input>
-                <button type='submit' className='mx-3 rounded-full'>
-                  <img className='w-[80%] -rotate-90 shadow-xl hover:shadow-primary-blue/30 rounded-full' src={send}/>
-                </button>
-              </form>
-            </div>}
+    if(prompt !== ""){
+
+      promptExec(prompt);
+      arr.push(prompt);
+      arr.push("");
+      setData(arr);
+      setPrompt("");
+    }
+  }} className='chat-box'>
+  <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[1001px]:text-[1.3vw] text-[4.6vw] bg-transparent text-primary-blue text-lg py-8 min-[1001px]:py-4 px-5 prompt ">
+    </input>
+    <button type='submit' className='mx-3 rounded-full'>
+      <img className='w-[80%] -rotate-90 shadow-xl hover:shadow-primary-blue/30 rounded-full' src={send}/>
+    </button>
+  </form>
+</div>}
+</div>
+            
 
 
 
 
-            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className={`h-full absolute right-0 max-[1000px]:hidden float-right ${isConsole? "block": "hidden"}`}/>
+            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className={`h-full absolute right-0 max-[1100px]:hidden float-right ${isConsole? "block": "hidden"}`}/>
 
           </div>
           { status === FlightState.FlightSpots || status === FlightState.NoDataFound ? null :<div className="cover mix-blend-screen justify-center items-center h-full w-full absolute z-[0]">
