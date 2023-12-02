@@ -157,8 +157,8 @@ export default function FlightListBackground({ playing, status }: FlightListBack
              <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className={`h-full max-[1100px]:hidden ${isConsole? "block": "hidden"} `} />
            
 
-<div>
-{status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className=' z-[50] p-5 w-[60%] max-[1200px]:w-[55%] max-[1100px]:w-full mt-10 pb-20'>
+
+{status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className=' z-[50] p-5 w-[42.5%] max-[1200px]:w-[35%] max-[1100px]:w-full mt-10 pb-20'>
 
 <div className='mx-auto text-center'>
       <h4 className='prompt text-primary-blue min-[1001px]:text-[3vw] text-[7vw]'>[ j.a.r.v.i.s. ]</h4>
@@ -229,7 +229,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
     </button>
   </form>
 </div>}
-</div>
+
             
 
 
