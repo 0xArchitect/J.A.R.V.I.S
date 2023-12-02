@@ -257,9 +257,9 @@ export default function FlightListBackground({ playing, status }: FlightListBack
       <div className="fixed top-0 w-full h-[10%] bg-gradient-to-t from-[rgba(12,255,255,0)] to-[rgb(0,240,255)] opacity-20" />
       <div className="fixed bottom-0 w-full h-[10%] z-[-10] bg-gradient-to-b from-[rgba(12,255,255,0)] to-[rgb(0,240,255)] opacity-20" />
       <div className="fixed top-10 right-10 left-10 flex justify-between pointer-events-auto">
-        {isConsole && <Button onClick={goHome} small={false}>
+        {/* {isConsole && <Button onClick={goHome} small={false}>
           home
-        </Button>}
+        </Button>} */}
         <div className="flex-1  px-8 items-center hidden md:flex">
           <div className="w-full relative">
             <PageDecoration />
@@ -267,7 +267,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
           </div>
         </div>
         
-        <div className="flex flex-grow-0">
+        <div className="flex mx-auto min-[801px]:translate-y-[-20px] justify-center justify-items-center items-center">
          {isConsole && <PassengersSocialButtons  socialsEnabled={true}/>}
         </div>
       </div>
