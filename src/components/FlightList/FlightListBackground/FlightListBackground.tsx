@@ -117,9 +117,9 @@ export default function FlightListBackground({ playing, status }: FlightListBack
           // console.log(res.data.result); 
           const result = res.data.result;
 
-          // const followups = result.split("\n");
+          const followups = result.split("\n");
 
-          const followups = ["Tell me about this project", "What are the tokenomics", "What is the allocation"];
+          // const followups = ["Tell me about this project", "What are the tokenomics", "What is the allocation"];
   
           setFollow(followups)
           console.log(followups);
@@ -164,7 +164,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                 </div>
 
 
-          <div className='overflow-scroll noscr h-[72vh] pb-5 chat'>
+          <div className='overflow-scroll noscr h-[72vh] min-[801px]:h-[62vh] pb-5 chat'>
 
              <div className=' w-[50%] block mt-10'>
                   <h4 className='prompt text-yellow-400 bg-gradient-to-b min-[801px]:text-[1.3vw] text-[4vw] from-blue-400/10 to-blue-400/20 p-5'>Greetings, my friend. I am J.A.R.V.I.S. may I kindly ask your name?</h4>
@@ -183,7 +183,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
 
               <div className='grid grid-flow-cols gap-5 grid-cols-3 min-[1000px]:w-[80%] mx-auto'>
 
-              {!loading && follow.map((f)=>(
+              {!loading && follow.map((f, i)=>(
                 
                   <div onClick={()=>{
 
@@ -196,7 +196,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                     setPrompt("");
 
 
-                    }} className={`${f==""? "hidden": null} p-3 border-[1px] border-blue-300 bg-gradient-to-b from-blue-300/10 to-blue-300/30`}>
+                    }} className={`${i !== 2 && i!==3 && i!==4 ? "hidden": null} ${f==""? "hidden": null} p-3 border-[1px] border-blue-300 bg-gradient-to-b from-blue-300/10 to-blue-300/30`}>
                     <h4 className=' prompt text-[1.2vw] max-[800px]:text-[3vw]'>{f.substring(0,100)}...</h4>
                     </div>
               ))

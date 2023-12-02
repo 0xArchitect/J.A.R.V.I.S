@@ -440,14 +440,16 @@ body {
   
   width: 47%;
   display: flex;
-  background-color: rgb(34 211 238 / 0.3);
+  // background-color: rgb(34 211 238 / 0.3);
+  // background-color: #13153c;
+
   border: 1px solid rgb(0 240 255);
 
   z-index: 50;
 
   @media (max-width:1000px) {
     width: 94%;
-    background-color: hsla(188, 86%, 43%, 0.5);
+    // background-color: hsla(188, 86%, 43%, 0.5);
 
     input {
       font-size: 16px !important;
