@@ -29,7 +29,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
   const [data, setData] = useState([""]);
   const [id, setID] = useState("");
 
-  const[follow, setFollow] = useState([""]);
+  const [follow, setFollow] = useState([""]);
 
   const [prompt, setPrompt] = useState("");
   // const [userchats, setUserChats] = useState([""]);
@@ -41,7 +41,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
 
 
   const handlepromptChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPrompt((e.target.value)); 
+    setPrompt((e.target.value));
   };
 
 
@@ -58,7 +58,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
       uiLeftRef.current.play();
       uiRightRef.current.play();
 
-      gsap.to(uiVideosRef.current, { opacity: 1, duration: 3, ease: Power2.easeInOut});
+      gsap.to(uiVideosRef.current, { opacity: 1, duration: 3, ease: Power2.easeInOut });
       return;
     }
 
@@ -66,12 +66,12 @@ export default function FlightListBackground({ playing, status }: FlightListBack
     uiLeftRef.current.pause();
     uiRightRef.current.pause();
 
-    gsap.to(uiVideosRef.current, { opacity: 0, duration: 1, ease: Power4.easeIn});
+    gsap.to(uiVideosRef.current, { opacity: 0, duration: 1, ease: Power4.easeIn });
   }, [playing]);
 
   useEffect(() => {
     if (status === FlightState.FlightSpots || status === FlightState.NoDataFound)
-      gsap.to(videoRef.current, { opacity: 0, duration: 1, display: "none", zIndex: -100});
+      gsap.to(videoRef.current, { opacity: 0, duration: 1, display: "none", zIndex: -100 });
   });
 
   function toggleAudio() {
@@ -82,50 +82,50 @@ export default function FlightListBackground({ playing, status }: FlightListBack
     navigate('/');
   }
 
-  async function promptExec(prompt: string){
-    try{
+  async function promptExec(prompt: string) {
+    try {
       const arr = data;
       setLoading(true);
 
       console.log(prompt, id);
-      if(id === ""){
+      if (id === "") {
         console.log("no id")
-        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chat: prompt}).then((res: any)=>{console.log(res); arr.pop(); arr.push(res.data.result); setID(res.data.chatId); setLoading(false)}).catch((err)=>{setLoading(false)});
+        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", { chat: prompt }).then((res: any) => { console.log(res); arr.pop(); arr.push(res.data.result); setID(res.data.chatId); setLoading(false) }).catch((err) => { setLoading(false) });
       }
 
-      else{
-        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", {chatId: id ,chat: prompt}).then((res: any)=>{console.log(res); arr.pop(); arr.push(res.data.result); setLoading(false)}).catch((err)=>{setLoading(false)});;
+      else {
+        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat", { chatId: id, chat: prompt }).then((res: any) => { console.log(res); arr.pop(); arr.push(res.data.result); setLoading(false) }).catch((err) => { setLoading(false) });;
       }
 
 
       setData(arr);
       console.log("DONE");
-      
+
     }
-    catch(err){
+    catch (err) {
       console.log(err);
     }
   }
 
-  async function followUp(){
+  async function followUp() {
     console.log("followup", id)
-    if(id){
+    if (id) {
 
-      try{
+      try {
         const arr = follow;
-        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat/followup", {chatId: id }).then((res: any)=>{
+        await axios.post("https://jesusai-dyvdf.ondigitalocean.app/rest/chat/followup", { chatId: id }).then((res: any) => {
           // console.log(res.data.result); 
           const result = res.data.result;
 
           // const followups = result.split("\n");
 
           const followups = ["Tell me about this project", "What are the tokenomics", "What is the allocation"];
-  
+
           setFollow(followups)
           console.log(followups);
         })
       }
-      catch(err){
+      catch (err) {
         console.log(err);
       }
     }
@@ -140,7 +140,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
     }
   }, [data, follow, loading]);
 
-  useEffect(()=>{
+  useEffect(() => {
     followUp();
   }, [data, id])
 
@@ -150,95 +150,76 @@ export default function FlightListBackground({ playing, status }: FlightListBack
     <div className="cover h-screen w-screen bg-gradient-to-tr from-[rgb(32,35,102)] to-black overflow-hidden relative pt-[60px]">
       <div className="h-full w-full relative">
         <div className="cover flex justify-center items-center overflow-hidden">
-          <div
-            ref={uiVideosRef}
-            className="mix-blend-screen min-w-[20vh] relative flex h-full w-full opacity-0"
-          >
-             <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className={`h-full max-[1100px]:hidden ${isConsole? "block": "hidden"} `} />
-           
+          <div ref={uiVideosRef} className="mix-blend-screen relative flex justify-center h-full w-full opacity-0">
+            <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className={`h-full absolute left-0 max-[1100px]:hidden ${isConsole ? "block" : "hidden"} `} />
+            {status === FlightState.FlightSpots || status === FlightState.NoDataFound &&
+              <div className='main-container z-[50] w-[42.5%] max-[1200px]:w-[35%] max-[1100px]:w-full'>
 
+                <div className='text-center'>
+                  <h4 className='prompt text-primary-blue min-[1001px]:text-[3vw] text-[2rem]'>[ j.a.r.v.i.s. ]</h4>
+                </div>
 
-{status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className=' z-[50] p-5 w-[42.5%] max-[1200px]:w-[35%] max-[1100px]:w-full mt-10 pb-20'>
+                <div className='overflow-scroll noscr pb-5 chat'>
 
-<div className='mx-auto text-center'>
-      <h4 className='prompt text-primary-blue min-[1001px]:text-[3vw] text-[7vw]'>[ j.a.r.v.i.s. ]</h4>
-    </div>
+                  <div className=' w-[50%] block mt-10'>
+                    <h4 className='prompt text-yellow-400 bg-gradient-to-b min-[1001px]:text-[1.5rem] text-[1.5rem] from-blue-400/10 to-blue-400/20 p-5'>
+                      Greetings, my friend. I am J.A.R.V.I.S. may I kindly ask your name?
+                    </h4>
+                  </div>
 
+                  {data.map((chat, i) => (
+                    <div className={`${i == 0 && "hidden"} ${chat === "" ? "p-5" : "p-5"} w-[70%] my-5 flex ${i % 2 == 0 ? "bg-gradient-to-b from-blue-400/10 to-blue-400/20" : "bg-primary-blue float-right"}`}>
+                      <h4 className={` ${i % 2 == 0 ? "text-yellow-400 " : "text-black"} min-[1001px]:text-[1.3vw] text-[1.5rem] prompt `}>{i == data.length - 1 && loading ? "..." : chat}</h4>
+                    </div>
+                  ))}
 
-<div className='overflow-scroll noscr h-[70vh] min-[801px]:h-[62vh] pb-5 chat'>
+                  <div className='grid grid-flow-cols gap-5 grid-cols-3 min-[1100px]:w-[100%] mx-auto'>
+                    {!loading && follow.map((f, i) => (
+                      <div onClick={() => {
+                        const arr = data;
+                        promptExec(f);
+                        arr.push(f);
+                        arr.push("");
+                        setData(arr);
+                        setPrompt("");
+                        // ${i !== 2 && i!==3 && i!==4 ? "hidden": null} 
+                      }} className={`${f == "" ? "hidden" : null} p-3 border-[1px] border-blue-300 bg-gradient-to-b from-blue-300/10 to-blue-300/30`}>
+                        <h4 className=' prompt text-[1rem] max-[1100px]:text-[1.5rem] overflow-hidden'>{f.substring(0, 100)}...</h4>
+                      </div>
+                    ))
+                    }
 
- <div className=' w-[50%] block mt-10'>
-      <h4 className='prompt text-yellow-400 bg-gradient-to-b min-[1001px]:text-[1.3vw] text-[4vw] from-blue-400/10 to-blue-400/20 p-5'>Greetings, my friend. I am J.A.R.V.I.S. may I kindly ask your name?</h4>
-  </div> 
+                  </div>
 
-  {data.map((chat, i)=>(
-    
+                  <div ref={contentRef} className='mt-5' />
+                </div>
 
-    <div className={`${i == 0 && "hidden"} ${chat === ""? "p-5": "p-5"} w-[70%] my-5 flex ${i%2 == 0 ? "bg-gradient-to-b from-blue-400/10 to-blue-400/20": "bg-primary-blue float-right"}`}>
-    <h4 className={` ${i%2 == 0? "text-yellow-400 " : "text-black"} min-[1001px]:text-[1.3vw] text-[4vw] prompt `}>{i == data.length-1 && loading ? "...": chat}</h4>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const arr = data;
+                    if (prompt !== "") {
 
-  
-</div>
-     
-  )) }
-
-  <div className='grid grid-flow-cols gap-5 grid-cols-3 min-[1100px]:w-[80%] mx-auto'>
-
-  {!loading && follow.map((f, i)=>(
-    
-      <div onClick={()=>{
-
-        const arr = data;
-
-        promptExec(f);
-        arr.push(f);
-        arr.push("");
-        setData(arr);
-        setPrompt("");
-        // ${i !== 2 && i!==3 && i!==4 ? "hidden": null} 
-
-        }} className={`${f==""? "hidden": null} p-3 border-[1px] border-blue-300 bg-gradient-to-b from-blue-300/10 to-blue-300/30`}>
-        <h4 className=' prompt text-[1.2vw] max-[1100px]:text-[3vw]'>{f.substring(0,100)}...</h4>
-        </div>
-  ))
-  }
-
- </div>
-  
-  <div ref={contentRef} className='mt-5' />
-</div>
-  <form onSubmit={(e)=>{
-
-    e.preventDefault();
-
-    const arr = data;
-
-    if(prompt !== ""){
-
-      promptExec(prompt);
-      arr.push(prompt);
-      arr.push("");
-      setData(arr);
-      setPrompt("");
-    }
-  }} className='chat-box'>
-  <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[1001px]:text-[1.3vw] text-[4.6vw] bg-transparent text-primary-blue text-lg py-8 min-[1001px]:py-4 px-5 prompt ">
-    </input>
-    <button type='submit' className='mx-3 rounded-full'>
-      <img className='w-[80%] -rotate-90 shadow-xl hover:shadow-primary-blue/30 rounded-full' src={send}/>
-    </button>
-  </form>
-</div>}
-
-            
-
-
-
-
-            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className={`h-full absolute right-0 max-[1100px]:hidden float-right ${isConsole? "block": "hidden"}`}/>
-
+                      promptExec(prompt);
+                      arr.push(prompt);
+                      arr.push("");
+                      setData(arr);
+                      setPrompt("");
+                    }
+                  }}
+                  className='chat-box'
+                >
+                  <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[1001px]:text-[1.3vw] text-[4.6vw] bg-transparent text-primary-blue text-lg py-8 min-[1001px]:py-4 px-5 prompt ">
+                  </input>
+                  <button type='submit' className='mx-3 rounded-full'>
+                    <img className='w-[80%] -rotate-90 shadow-xl hover:shadow-primary-blue/30 rounded-full' src={send} />
+                  </button>
+                </form>
+              </div>
+            }
+            <video ref={uiRightRef} src={UI_RIGHT} muted playsInline loop className={`h-full absolute right-0 max-[1100px]:hidden ${isConsole ? "block" : "hidden"}`} />
           </div>
-          { status === FlightState.FlightSpots || status === FlightState.NoDataFound ? null :<div className="cover mix-blend-screen justify-center items-center h-full w-full absolute z-[0]">
+          {status === FlightState.FlightSpots || status === FlightState.NoDataFound ? null : <div className="cover mix-blend-screen justify-center items-center h-full w-full absolute z-[0]">
             <div className="flex flex-1" />
             <video
               ref={videoRef}
@@ -249,7 +230,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
               loop
               className="h-full object-cover abs-center-x"
             />
-            
+
             <div className="flex flex-1" />
           </div>}
         </div>
@@ -269,9 +250,9 @@ export default function FlightListBackground({ playing, status }: FlightListBack
             <div className="absolute bottom-[1px] left-[100px] right-8 h-[1px] bg-primary-blue" />
           </div>
         </div>
-        
+
         <div className="flex mx-auto min-[801px]:translate-y-[-20px] justify-center justify-items-center items-center">
-         {isConsole && <PassengersSocialButtons  socialsEnabled={true}/>}
+          {isConsole && <PassengersSocialButtons socialsEnabled={true} />}
         </div>
       </div>
     </div>

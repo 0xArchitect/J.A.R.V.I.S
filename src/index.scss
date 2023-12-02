@@ -432,40 +432,23 @@ body {
   }
 }
 
+.main-container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  max-height: 100%;
+}
 
 .chat-box {
-  position: fixed;
-  bottom: 1.5rem;
-  margin: 0 auto;
-  
-  width: 40%;
   display: flex;
-  // background-color: rgb(34 211 238 / 0.3);
-  // background-color: #13153c;
-
   border: 1px solid rgb(0 240 255);
 
   z-index: 50;
 
-  @media (max-width:1200px) {
-    width: 32%;
-  }
-
   @media (max-width:1100px) {
-    width: 96.5%;
-    // background-color: hsla(188, 86%, 43%, 0.5);
-
     input {
       font-size: 16px !important;
     }
-  }
-}
-
-.chat {
-  padding-bottom: 4.5rem;
-  
-  @media (max-width:1000px) {
-    padding-bottom: 1rem;
-    height: 67vh;
   }
 }
