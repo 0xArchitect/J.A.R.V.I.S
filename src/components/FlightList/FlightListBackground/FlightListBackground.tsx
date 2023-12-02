@@ -157,24 +157,24 @@ export default function FlightListBackground({ playing, status }: FlightListBack
              <video ref={uiLeftRef} src={UI_LEFT} muted playsInline loop className={`h-full max-[1000px]:hidden ${isConsole? "block": "hidden"} `} />
            
 
-            {status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className='relative z-[50] p-5 w-[50%] max-[1000px]:w-full mt-10 pb-20'>
+            {status === FlightState.FlightSpots || status === FlightState.NoDataFound && <div className='relative z-[50] p-5 w-[49%] max-[1200px]:w-[33%] max-[1000px]:w-full mt-10 pb-20'>
 
             <div className='mx-auto text-center'>
-                  <h4 className='prompt text-primary-blue min-[801px]:text-[3vw] text-[7vw]'>[ j.a.r.v.i.s. ]</h4>
+                  <h4 className='prompt text-primary-blue min-[1001px]:text-[3vw] text-[7vw]'>[ j.a.r.v.i.s. ]</h4>
                 </div>
 
 
-          <div className='overflow-scroll noscr h-[72vh] min-[801px]:h-[62vh] pb-5 chat'>
+          <div className='overflow-scroll noscr h-[70vh] min-[801px]:h-[62vh] pb-5 chat'>
 
              <div className=' w-[50%] block mt-10'>
-                  <h4 className='prompt text-yellow-400 bg-gradient-to-b min-[801px]:text-[1.3vw] text-[4vw] from-blue-400/10 to-blue-400/20 p-5'>Greetings, my friend. I am J.A.R.V.I.S. may I kindly ask your name?</h4>
+                  <h4 className='prompt text-yellow-400 bg-gradient-to-b min-[1001px]:text-[1.3vw] text-[4vw] from-blue-400/10 to-blue-400/20 p-5'>Greetings, my friend. I am J.A.R.V.I.S. may I kindly ask your name?</h4>
               </div> 
 
               {data.map((chat, i)=>(
                 
 
                 <div className={`${i == 0 && "hidden"} ${chat === ""? "p-5": "p-5"} w-[70%] my-5 flex ${i%2 == 0 ? "bg-gradient-to-b from-blue-400/10 to-blue-400/20": "bg-primary-blue float-right"}`}>
-                <h4 className={` ${i%2 == 0? "text-yellow-400 " : "text-black"} min-[801px]:text-[1.3vw] text-[4vw] prompt `}>{i == data.length-1 && loading ? "...": chat}</h4>
+                <h4 className={` ${i%2 == 0? "text-yellow-400 " : "text-black"} min-[1001px]:text-[1.3vw] text-[4vw] prompt `}>{i == data.length-1 && loading ? "...": chat}</h4>
    
               
             </div>
@@ -197,7 +197,7 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                     // ${i !== 2 && i!==3 && i!==4 ? "hidden": null} 
 
                     }} className={`${f==""? "hidden": null} p-3 border-[1px] border-blue-300 bg-gradient-to-b from-blue-300/10 to-blue-300/30`}>
-                    <h4 className=' prompt text-[1.2vw] max-[800px]:text-[3vw]'>{f.substring(0,100)}...</h4>
+                    <h4 className=' prompt text-[1.2vw] max-[1000px]:text-[3vw]'>{f.substring(0,100)}...</h4>
                     </div>
               ))
               }
@@ -220,8 +220,8 @@ export default function FlightListBackground({ playing, status }: FlightListBack
                   setData(arr);
                   setPrompt("");
                 }
-              }} className='chat-box'>
-              <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[801px]:text-[1.3vw] text-[4.6vw] bg-transparent text-primary-blue text-lg py-8 min-[801px]:py-4 px-5 prompt ">
+              }} className='chat-box w-[55%]'>
+              <input placeholder="Write a message..." disabled={loading} type="text" value={prompt} onChange={handlepromptChange} className="w-[95%] min-[1001px]:text-[1.3vw] text-[4.6vw] bg-transparent text-primary-blue text-lg py-8 min-[1001px]:py-4 px-5 prompt ">
                 </input>
                 <button type='submit' className='mx-3 rounded-full'>
                   <img className='w-[80%] -rotate-90 shadow-xl hover:shadow-primary-blue/30 rounded-full' src={send}/>

@@ -447,6 +447,10 @@ body {
 
   z-index: 50;
 
+  @media (max-width:1200px) {
+    width: 30%;
+  }
+
   @media (max-width:1000px) {
     width: 94%;
     // background-color: hsla(188, 86%, 43%, 0.5);
